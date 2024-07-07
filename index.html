@@ -63,6 +63,11 @@
             "Giá trị nhập lại không đúng."
           ),
         ],
+        // Each form has its own submission handler, so it is not specifically recorded in the Validator file. To reuse for other forms.
+        onSubmit: function (data) {
+          console.log(data);
+          // TODO: call API.
+        },
       });
     </script>
   </body>

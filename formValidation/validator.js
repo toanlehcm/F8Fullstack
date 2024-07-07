@@ -28,6 +28,8 @@ function Validator(options) {
       errorElement.innerText = ''
       inputElement.parentElement.classList.remove('invalid')
     }
+
+    return !errorMessage
   }
 
   // Get element of form that need to validate.
@@ -38,11 +40,42 @@ function Validator(options) {
     formElement.onsubmit = function (e) {
       e.preventDefault()
 
+      var isFormValid = true
+
       // Loop through each rules and validate.
       options.rules.forEach(function (rule) {
         var inputElement = formElement.querySelector(rule.selector);
-        validated(inputElement, rule)
+        var isValid = validated(inputElement, rule)
+
+        if (!isValid) {
+          isFormValid = false
+        }
       });
+
+
+
+      if (isFormValid) {
+        // Handle submit form with javascript.
+        if (typeof options.onSubmit === 'function') {
+
+          // Query Selector All get all input elements has name and not disabled.
+          var enableInput = formElement.querySelectorAll('[name]:not([disabled])')
+
+          var formValues = Array.from(enableInput).reduce(function (values, input) {
+
+            // 1. Set input.value for values[input.name].
+            // 2. Return values
+            return (values[input.name] = input.value) && values
+          }, {})
+
+          options.onSubmit(formValues)
+        }
+
+        // Handle submit form with default behavior.
+        else {
+          formElement.submit()
+        }
+      }
     }
 
 
