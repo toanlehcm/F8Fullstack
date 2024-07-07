@@ -3,67 +3,104 @@
   margin: 0;
   box-sizing: border-box;
 }
-body {
-  display: flex;
-  font-family: "Poppins", sans-serif;
-}
-body > div {
-  margin: 5% auto 0;
-  max-width: 720px;
-}
-.tabs {
-  display: flex;
-  position: relative;
-}
-.tabs .line {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 0;
-  height: 6px;
-  border-radius: 15px;
-  background-color: #c23564;
-  transition: all 0.2s ease;
-}
-.tab-item {
-  min-width: 80px;
-  padding: 16px 20px 11px 20px;
-  font-size: 20px;
-  text-align: center;
-  color: #c23564;
-  background-color: #fff;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-  border-bottom: 5px solid transparent;
-  opacity: 0.6;
-  cursor: pointer;
-  transition: all 0.5s ease;
-}
-.tab-icon {
-  font-size: 24px;
-  width: 32px;
-  position: relative;
-  top: 2px;
-}
-.tab-item:hover {
-  opacity: 1;
-  background-color: rgba(194, 53, 100, 0.05);
-  border-color: rgba(194, 53, 100, 0.1);
-}
-.tab-item.active {
-  opacity: 1;
-}
-.tab-content {
-  padding: 28px 0;
-}
-.tab-pane {
+html {
   color: #333;
-  display: none;
+  font-size: 62.5%;
+  font-family: "Open Sans", sans-serif;
 }
-.tab-pane.active {
-  display: block;
+.main {
+  background: #f1f1f1;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
 }
-.tab-pane h2 {
-  font-size: 24px;
-  margin-bottom: 8px;
+.form {
+  width: 360px;
+  min-height: 100px;
+  padding: 32px 24px;
+  text-align: center;
+  background: #fff;
+  border-radius: 2px;
+  margin: 24px;
+  align-self: center;
+  box-shadow: 0 2px 5px 0 rgba(51, 62, 73, 0.1);
+}
+.form .heading {
+  font-size: 2rem;
+}
+.form .desc {
+  text-align: center;
+  color: #636d77;
+  font-size: 1.6rem;
+  font-weight: lighter;
+  line-height: 2.4rem;
+  margin-top: 16px;
+  font-weight: 300;
+}
+
+.form-group {
+  display: flex;
+  margin-bottom: 16px;
+  flex-direction: column;
+}
+
+.form-label,
+.form-message {
+  text-align: left;
+}
+
+.form-label {
+  font-weight: 700;
+  padding-bottom: 6px;
+  line-height: 1.8rem;
+  font-size: 1.4rem;
+}
+
+.form-control {
+  height: 40px;
+  padding: 8px 12px;
+  border: 1px solid #b3b3b3;
+  border-radius: 3px;
+  outline: none;
+  font-size: 1.4rem;
+}
+
+.form-control:hover {
+  border-color: #1dbfaf;
+}
+
+.form-group.invalid .form-control {
+  border-color: #f33a58;
+}
+
+.form-group.invalid .form-message {
+  color: #f33a58;
+}
+
+.form-message {
+  font-size: 1.2rem;
+  line-height: 1.6rem;
+  padding: 4px 0 0;
+}
+
+.form-submit {
+  outline: none;
+  background-color: #1dbfaf;
+  margin-top: 12px;
+  padding: 12px 16px;
+  font-weight: 600;
+  color: #fff;
+  border: none;
+  width: 100%;
+  font-size: 14px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.form-submit:hover {
+  background-color: #1ac7b6;
+}
+
+.spacer {
+  margin-top: 36px;
 }
