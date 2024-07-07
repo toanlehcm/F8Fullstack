@@ -17,7 +17,7 @@ function Validator(options) {
 
   var selectorRules = {}
 
-  // Handle validation.
+  // Handle validation through all rules.
   function validated(inputElement, rule) {
     // Get value in input to check rule.
     var errorMessage;
@@ -28,7 +28,17 @@ function Validator(options) {
 
     // Loop through all rules and check. If has error, break.
     for (let i = 0; i < rules.length; i++) {
-      errorMessage = rules[i](inputElement.value)
+      switch (inputElement.type) {
+        case 'radio':
+        case 'checkbox':
+
+          break;
+
+        default:
+          errorMessage = rules[i](inputElement.value)
+          break;
+      }
+
       if (errorMessage) break;
     }
 
