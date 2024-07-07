@@ -31,7 +31,7 @@ function Validator(options) {
       switch (inputElement.type) {
         case 'radio':
         case 'checkbox':
-
+          errorMessage = rules[i](formElement.querySelector(rule.selector + ':checked'))
           break;
 
         default:
@@ -70,7 +70,6 @@ function Validator(options) {
       options.rules.forEach(function (rule) {
         var inputElement = formElement.querySelector(rule.selector);
         var isValid = validated(inputElement, rule)
-
         if (!isValid) {
           isFormValid = false
         }
@@ -86,9 +85,17 @@ function Validator(options) {
           var enableInput = formElement.querySelectorAll('[name]:not([disabled])')
 
           var formValues = Array.from(enableInput).reduce(function (values, input) {
+            switch (input.type) {
+              case 'radio':
+              case 'checkbox':
+                values[input.name] = formElement.querySelector(`input[name="${input.name}"]:checked`).value
+                break;
 
-            // 1. Set input.value for values[input.name].
-            values[input.name] = input.value
+              default:
+                // 1. Set input.value for values[input.name].
+                values[input.name] = input.value
+                break;
+            }
 
             // 2. Return values
             return values
@@ -117,23 +124,26 @@ function Validator(options) {
       }
 
       // Ge input from form in options.
-      var inputElement = formElement.querySelector(rule.selector);
+      var inputElements = formElement.querySelectorAll(rule.selector);
 
-      if (inputElement) {
-        inputElement.onblur = function () {
-          // value: get from inputElement.value
-          // test: get from rule.test
-          // Handle for case blur outside input element.
-          validated(inputElement, rule)
+      // inputElements is Nodelist, so need to convert to array. https://developer.mozilla.org/en-US/docs/Web/API/NodeList/
+      Array.from(inputElements).forEach(function (inputElement) {
+        if (inputElement) {
+          inputElement.onblur = function () {
+            // value: get from inputElement.value
+            // test: get from rule.test
+            // Handle for case blur outside input element.
+            validated(inputElement, rule)
 
-          // Handle for case whenever user is typing.
-          inputElement.oninput = function () {
-            var errorElement = getParent(inputElement, options.formGroupSelector).querySelector(options.errorSelector);
-            errorElement.innerText = ''
-            getParent(inputElement, options.formGroupSelector).classList.remove('invalid')
+            // Handle for case whenever user is typing.
+            inputElement.oninput = function () {
+              var errorElement = getParent(inputElement, options.formGroupSelector).querySelector(options.errorSelector);
+              errorElement.innerText = ''
+              getParent(inputElement, options.formGroupSelector).classList.remove('invalid')
+            }
           }
         }
-      }
+      })
     });
   }
 }
@@ -146,7 +156,8 @@ Validator.isRequired = function (selector, message) {
   return {
     selector: selector,
     test: function (value) { // Receive value from input.
-
+      // TODO: fix radio.
+      // errorMessage = rules[i](formElement.querySelector(rule.selector + ':checked'))
       return value?.trim() ? undefined : message || 'Vui lòng nhập trường này.'
     }
   }
