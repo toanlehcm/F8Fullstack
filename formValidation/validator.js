@@ -1,13 +1,27 @@
 /*--------- Constructor function Validator. ------------*/
 function Validator(options) {
 
+  /** 
+   * element: input element.
+   * selector: element has class 'form-group'.
+   * */
+  function getParent(element, selector) {
+    while (element.parentElement) {
+      if (element.parentElement.matches(selector)) {
+        return element.parentElement
+      }
+
+      element = element.parentElement
+    }
+  }
+
   var selectorRules = {}
 
   // Handle validation.
   function validated(inputElement, rule) {
     // Get value in input to check rule.
     var errorMessage;
-    var errorElement = inputElement.parentElement.querySelector(options.errorSelector);
+    var errorElement = getParent(inputElement, options.formGroupSelector).querySelector(options.errorSelector);
 
     // Get all rules of selector.
     var rules = selectorRules[rule.selector]
@@ -23,10 +37,10 @@ function Validator(options) {
       errorElement.innerText = errorMessage
 
       // Add class error to inputElement.
-      inputElement.parentElement.classList.add('invalid')
+      getParent(inputElement, options.formGroupSelector).classList.add('invalid')
     } else {
       errorElement.innerText = ''
-      inputElement.parentElement.classList.remove('invalid')
+      getParent(inputElement, options.formGroupSelector).classList.remove('invalid')
     }
 
     return !errorMessage
@@ -104,9 +118,9 @@ function Validator(options) {
 
           // Handle for case whenever user is typing.
           inputElement.oninput = function () {
-            var errorElement = inputElement.parentElement.querySelector(options.errorSelector);
+            var errorElement = getParent(inputElement, options.formGroupSelector).querySelector(options.errorSelector);
             errorElement.innerText = ''
-            inputElement.parentElement.classList.remove('invalid')
+            getParent(inputElement, options.formGroupSelector).classList.remove('invalid')
           }
         }
       }
