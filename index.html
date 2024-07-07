@@ -39,12 +39,28 @@
         </div>
 
         <div class="form-group">
+          <label for="province" class="form-label">Tỉnh/TP</label>
+          <select id="province" name="province" class="form-control">
+            <option value="">Chọn tỉnh/TP</option>
+            <option value="hn">Hà Nội</option>
+            <option value="hcm">HCM</option>
+          </select>
+          <span class="form-message"></span>
+        </div>
+
+        <div class="form-group">
           <label for="gender" class="form-label">Giới tính</label>
           <div class="horizontal">
             <div><input name="gender" type="radio" value="male" class="form-control" /> Nam</div>
             <div><input name="gender" type="radio" value="female" class="form-control" /> Nữ</div>
             <div><input name="gender" type="radio" value="other" class="form-control" /> Khác</div>
           </div>
+          <span class="form-message"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="avatar" class="form-label">Ảnh đại diện</label>
+          <input id="avatar" name="avatar" type="file" class="form-control" />
           <span class="form-message"></span>
         </div>
 
@@ -74,6 +90,8 @@
             "Giá trị nhập lại không đúng."
           ),
           // Validator.isRequired("input[name=gender]", "Vui lòng chọn giới tinh."),
+          Validator.isRequired("#province"),
+          Validator.isRequired("#avatar"),
         ],
         // Each form has its own submission handler, so it is not specifically recorded in the Validator file. To reuse for other forms.
         onSubmit: function (data) {
