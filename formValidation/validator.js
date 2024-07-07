@@ -64,8 +64,10 @@ function Validator(options) {
           var formValues = Array.from(enableInput).reduce(function (values, input) {
 
             // 1. Set input.value for values[input.name].
+            values[input.name] = input.value
+
             // 2. Return values
-            return (values[input.name] = input.value) && values
+            return values
           }, {})
 
           options.onSubmit(formValues)
@@ -132,7 +134,7 @@ Validator.isEmail = function (selector, message) {
     test: function (value) {
       var regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
 
-      return regex.test(value) ? undefined : message || 'Vui lòng nhập email.'
+      return regex.test(value) ? undefined : message || 'Vui lòng nhập đúng kiểu email!'
     }
   }
 }
