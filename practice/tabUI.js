@@ -3,7 +3,6 @@ const $$ = document.querySelectorAll.bind(document)
 
 const tabs = $$('.tab-item')
 const panes = $$('.tab-pane')
-console.log('tabs', tabs);
 
 const tabActive = $(".tab-item.active");
 const line = $(".tabs .line");
