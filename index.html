@@ -49,13 +49,19 @@
         form: "#form-1",
         errorSelector: ".form-message",
         rules: [
-          Validator.isRequired("#fullname"),
-          Validator.isEmail("#email"),
-          Validator.minLength("#password", 6),
-          // Validator.isRequired("#password_confirmation"),
-          // Validator.isConfirmed("#password_confirmation", function () {
-          //   return document.querySelector("#form-1 #password").value;
-          // }),
+          Validator.isRequired("#fullname", "Vui lòng nhập tên."),
+          Validator.isRequired("#email", "Vui lòng nhập email."),
+          Validator.isEmail("#email", "Vui lòng nhập đúng kiểu email."),
+          Validator.minLength("#password", 6, `Vui lòng nhập nhiều hơn 6 kí tự.`),
+          Validator.isRequired("#password_confirmation"),
+          Validator.isConfirmed(
+            "#password_confirmation",
+            function () {
+              // Return value to check similar with input password that user is typing. Identify ID #form-1 so as not to confuse it with another form.
+              return document.querySelector("#form-1 #password").value;
+            },
+            "Giá trị nhập lại không đúng."
+          ),
         ],
       });
     </script>
