@@ -1,9 +1,7 @@
 /*--------- Constructor function Validator. ------------*/
-function Validator2(formSelector, options) {
-  // Set default value for param (ES5)
-  if (!options) {
-    options = {}
-  }
+function Validator3(formSelector) {
+  var _this = this;
+  var formRules = {}
 
   function getParent(element, selector) {
     while (element.parentElement) {
@@ -14,8 +12,6 @@ function Validator2(formSelector, options) {
       element = element.parentElement
     }
   }
-
-  var formRules = {}
 
   /**
    * Rules creation convention:
@@ -90,11 +86,6 @@ function Validator2(formSelector, options) {
       var rules = formRules[event.target.name]
       var errorMessage;
 
-      // rules.find(function (rule) {
-      //   errorMessage = rule(event.target.value);
-      //   return errorMessage
-      // })
-
       for (var rule of rules) {
         errorMessage = rule(event.target.value);
         if (errorMessage) break
@@ -128,7 +119,6 @@ function Validator2(formSelector, options) {
       }
     }
 
-
     // Handle submit form.
     formElement.onsubmit = function (event) {
       event.preventDefault();
@@ -150,7 +140,7 @@ function Validator2(formSelector, options) {
         // } else {
         // }
 
-        if (typeof options.onSubmit === 'function') {
+        if (typeof _this.onSubmit === 'function') {
           // Query Selector All get all input elements has name and not disabled.
           var enableInput = formElement.querySelectorAll('[name]:not([disabled])')
 
@@ -187,7 +177,7 @@ function Validator2(formSelector, options) {
           }, {})
 
           // Call back function obsubmit and return form values.
-          options.onSubmit(formValues);
+          _this.onSubmit(formValues);
         } else {
           formElement.submit();
         }
